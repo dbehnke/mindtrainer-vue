@@ -1,11 +1,15 @@
 <template>
     <div>
         <p>{{question.question}}</p>
-        <ul>
-            <li>{{question.correct_answer}}</li>
-            <li v-for="choice in question.incorrect_answers"
-            :key="choice">{{choice}}</li>
-        </ul>
+        <div class="ui container">
+            <div v-for="choice in question.choices"
+            :key="choice">
+                <button v-on:click="question.selected = choice" class="fluid ui labeled icon button">
+                    <i v-show="question.selected == choice" class="check icon"/>
+                    {{choice}}
+                </button>
+            </div>
+        </div>
     </div>
 </template>
 

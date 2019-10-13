@@ -45,14 +45,43 @@ export default {
             axios.get("https://opentdb.com/api.php?amount=10").then((response) => {
                 const q = response.data.results
                 let questions = [];
+                
                 q.forEach(function (question) {
-                    let qq = question
-                    qq.question = he.decode(qq.question, { 'allowUnsafeSymbols': true })
+                    let qq = {}
+                    qq.question = he.decode(question.question, { 'allowUnsafeSymbols': true })
+                    qq.choices = []
                     //TODO choices {"choice": "text here", "isCorrectAnswer": false}
                     //TODO randomize choices
+                    question.incorrect_answers.forEach(function (choice) {
+                        qq.choices.push(he.decode(choice, { 'allowUnsafeSymbols': true }))
+                    })
+                    qq.selected = ""
+                    qq.correct_answer = he.decode(question.correct_answer, { 'allowUnsafeSymbols': true })
+                    qq.choices.push(qq.correct_answer)
+
+                    //randomize the choice order
+                    function shuffle(arra1) {
+                        let ctr = arra1.length;
+                        let temp;
+                        let index;
+
+                        // While there are elements in the array
+                        while (ctr > 0) {
+                    // Pick a random index
+                            index = Math.floor(Math.random() * ctr);
+                    // Decrease ctr by 1
+                            ctr--;
+                    // And swap the last element with it
+                            temp = arra1[ctr];
+                            arra1[ctr] = arra1[index];
+                            arra1[index] = temp;
+                        }
+                        return arra1;
+                    }
+                    qq.choices == shuffle(qq.choices)
+
                     questions.push(qq)
-                    //console.log(qq)
-                });
+                })
                 this.questions = questions
             })
         },
