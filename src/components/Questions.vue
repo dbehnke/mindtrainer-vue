@@ -8,17 +8,17 @@
         </div>
         <div v-show="!reset">
             <button v-on:click="resetQuestions()">Reset</button>
-        
-            <div class="ui card" v-for="(question, index) in questions"
+            <div class="ui stackable vertically divided grid container">
+                <div class="four wide column" 
+                    v-for="(question, index) in questions"
                     :key="question.question">
-                <div class="content">
-                    <div class="header">Question #{{index}}</div>
-                </div>
-                <div class="content">
-                    <p>{{question.question}}</p>
-                </div>
-                <div class="extra content">
-                    <button class="ui button">Join Project</button>
+                <p>Question #{{index + 1}}</p>
+                <p>{{question.question}}</p>
+                <ul>
+                    <li>{{question.correct_answer}}</li>
+                    <li v-for="choice in question.incorrect_answers"
+                    :key="choice">{{choice}}</li>
+                </ul>
                 </div>
             </div>
         </div>
@@ -52,6 +52,7 @@ export default {
                     //TODO choices {"choice": "text here", "isCorrectAnswer": false}
                     //TODO randomize choices
                     questions.push(qq)
+                    //console.log(qq)
                 });
                 this.questions = questions
             })
