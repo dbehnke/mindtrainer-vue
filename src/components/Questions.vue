@@ -10,15 +10,10 @@
             <button v-on:click="resetQuestions()">Reset</button>
             <div class="ui stackable vertically divided grid container">
                 <div class="four wide column" 
-                    v-for="(question, index) in questions"
-                    :key="question.question">
-                <p>Question #{{index + 1}}</p>
-                <p>{{question.question}}</p>
-                <ul>
-                    <li>{{question.correct_answer}}</li>
-                    <li v-for="choice in question.incorrect_answers"
-                    :key="choice">{{choice}}</li>
-                </ul>
+                v-for="(question, index) in questions"
+                :key="question.question">
+                    <p>Question #{{index + 1}}</p>
+                    <QuestionItem v-bind:question="question"/>
                 </div>
             </div>
         </div>
@@ -28,9 +23,13 @@
 <script>
 import axios from 'axios'
 import he from 'he'
+import QuestionItem from './QuestionItem.vue'
 
 export default {
     name: 'Questions',
+    components: {
+        QuestionItem
+    },
     data () { 
         return {
             numQuestions: 0,
