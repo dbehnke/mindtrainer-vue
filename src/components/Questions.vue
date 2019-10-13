@@ -45,7 +45,7 @@ export default {
             axios.get("https://opentdb.com/api.php?amount=10").then((response) => {
                 const q = response.data.results
                 let questions = [];
-                q.forEach(function (question, index) {
+                q.forEach(function (question) {
                     let qq = question
                     qq.question = he.decode(qq.question, { 'allowUnsafeSymbols': true })
                     //TODO choices {"choice": "text here", "isCorrectAnswer": false}
