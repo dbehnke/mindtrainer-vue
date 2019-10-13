@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h2>Questions</h2>
+        <h2>Questions (DEMO MODE - Not Functional Yet)</h2>
         <div v-show="reset">
-            <input v-model="numQuestions" placeholder="how many questions?"/>
-            <p v-show="onError.length > 0">Value must be a number</p>
+            <!-- <input v-model="numQuestions" placeholder="how many questions?"/>
+            <p v-show="onError.length > 0">Value must be a number</p> -->
             <button v-on:click="loadQuestions()">Start</button>
         </div>
         <div v-show="!reset">
