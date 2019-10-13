@@ -27,6 +27,7 @@
 
 <script>
 import axios from 'axios'
+import he from 'he'
 
 export default {
     name: 'Questions',
@@ -43,8 +44,16 @@ export default {
         loadQuestions() {
             this.reset = false
             axios.get("https://opentdb.com/api.php?amount=10").then((response) => {
-                console.log(response.data)
-                this.questions = response.data.results
+                const q = response.data.results
+                let questions = [];
+                q.forEach(function (question, index) {
+                    let qq = question
+                    qq.question = he.decode(qq.question, { 'allowUnsafeSymbols': true })
+                    //TODO choices {"choice": "text here", "isCorrectAnswer": false}
+                    //TODO randomize choices
+                    questions.push(qq)
+                });
+                this.questions = questions
             })
         },
         resetQuestions() {
