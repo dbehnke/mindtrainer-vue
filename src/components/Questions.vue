@@ -4,10 +4,10 @@
         <div v-show="reset">
             <!-- <input v-model="numQuestions" placeholder="how many questions?"/>
             <p v-show="onError.length > 0">Value must be a number</p> -->
-            <button v-on:click="loadQuestions()">Start</button>
+            <button class="ui button" v-on:click="loadQuestions()">Start</button>
         </div>
         <div v-show="!reset">
-            <button v-on:click="resetQuestions()">Reset</button>
+            <button class="ui button" v-on:click="resetQuestions()">Reset</button>
             <p>Score -- Answered: {{questionsAnswered}}, Correct: {{questionsCorrect}}, Wrong: {{questionsWrong}} Percentage: {{scorePercent}}</p>
             <div class="ui stackable vertically divided grid container">
                 <div class="four wide column" 
@@ -82,6 +82,7 @@ export default {
                         }
                         return arra1;
                     }
+                    qq.answered = false
                     qq.choices == shuffle(qq.choices)
 
                     questions.push(qq)
