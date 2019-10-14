@@ -8,6 +8,7 @@
         </div>
         <div v-show="!reset">
             <button v-on:click="resetQuestions()">Reset</button>
+            <p>Score -- Answered: {{questionsAnswered}}, Correct: {{questionsCorrect}}, Wrong: {{questionsWrong}} Percentage: {{scorePercent}}</p>
             <div class="ui stackable vertically divided grid container">
                 <div class="four wide column" 
                 v-for="(question, index) in questions"
@@ -35,8 +36,11 @@ export default {
             numQuestions: 0,
             reset: true,
             onError: "",
-            questions: [{"id": 0, "title": "poop"},
-            {"id": 1, "title": "poop"},{"id": 2, "title": "poop"}] 
+            questions: [],
+            questionsAnswered: 0,
+            questionsCorrect: 0,
+            questionsWrong: 0,
+            scorePercent: 0
         }
     },
     methods: {
