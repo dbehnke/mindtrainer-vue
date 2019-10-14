@@ -49,6 +49,10 @@ export default {
             if (!question.answered) {
                 question.selected = choice
                 question.answered = true
+                //tell questions component that the question was answered and if it was correctly.
+                //this will update the scoreboard
+                const correct = question.correct_answer == choice
+                this.$root.$emit('questionAnswered', correct)
             }
             
         },
