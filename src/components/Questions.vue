@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Questions (DEMO MODE - Not Functional Yet)</h2>
+        <h2>Questions (This is a DEMO, things may be broken still)</h2>
         <div v-show="reset">
             <!-- <input v-model="numQuestions" placeholder="how many questions?"/>
             <p v-show="onError.length > 0">Value must be a number</p> -->
@@ -8,11 +8,17 @@
         </div>
         <div v-show="!reset">
             <button class="ui button" v-on:click="resetQuestions()">Reset</button>
-            <p>Score -- Answered: {{questionsAnswered}}, Correct: {{questionsCorrect}}, Wrong: {{questionsWrong}} Percentage: {{scorePercent}}</p>
+            <div class="ui centered segment">
+                <div v-if="questionsAnswered == questions.length" class="ui label">{{scorePercent}}% correct</div>
+                <div v-else class="ui label">{{questionsAnswered}} answered</div>
+                <div class="ui green label">{{questionsCorrect}} Correct</div>
+                <div class="ui red label">{{questionsWrong}} Wrong</div>
+            </div>
+
             <div class="ui stackable vertically divided grid container">
                 <div class="four wide column" 
                 v-for="(question, index) in questions"
-                :key="question.question">
+                :key="index">
                     <p>Question #{{index + 1}}</p>
                     <QuestionItem v-bind:question="question"/>
                 </div>
@@ -92,7 +98,19 @@ export default {
         },
         resetQuestions() {
             this.reset = true
+            this.questionsAnswered = 0
+            this.questionsCorrect = 0
+            this.questionsWrong = 0
+            this.scorePercent = 0        
         }
     },
+    mounted() {
+        this.$root.$on('questionAnswered', (isCorrect) => {
+            this.questionsAnswered++
+            if (isCorrect) this.questionsCorrect++
+            else this.questionsWrong++
+            this.scorePercent = (this.questionsCorrect / this.questionsAnswered) * 100.0
+        })
+    }
 }
 </script>
